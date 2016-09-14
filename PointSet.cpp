@@ -92,14 +92,20 @@ bool PointSet::add(Point const &pnt)
 bool PointSet::remove(const Point &pnt)
 {
 	int res = _contains(pnt);
-	if (res == _notFound) return false;
+	if (res == _notFound)
+	{
+		return false;
+	}
 	delete _pointArray[res];
 	if (res != _currentOccupancy - 1)
 	{
 		_pointArray[res] = _pointArray[_currentOccupancy - 1];
 	}
 	_currentOccupancy--;
-	if (_currentOccupancy < _currentCapacity / 2) _decreaseCapacity();
+	if (_currentOccupancy < _currentCapacity / 2)
+	{
+		_decreaseCapacity();
+	}
 	return true;
 
 

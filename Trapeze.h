@@ -6,10 +6,12 @@
 #define CPPEX2_TRAPEZE_H
 #include "Shape.h"
 
-
+/**
+ * class representing a Trapeze, inherits from Shape.
+ */
 class Trapeze : public Shape
 {
-private:
+
 public:
 	/**
 	 * default ctor
