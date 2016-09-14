@@ -4,6 +4,29 @@
 
 #include "Shape.h"
 
+/**
+ * default constructor.
+ * @return NA.
+ */
+Shape::Shape()
+{
+
+}
+
+/**
+ * ctor accepting a name for the shape. sets the name.
+ * @param name the name of the shape to create.
+ * @return NA.
+ */
+Shape::Shape(const std::string name) : _name(name)
+{
+
+}
+
+/**
+ * initialize a shape from a list of coordinates (create a PointSet backing obj).
+ * @param list the list of coordinates to use for populating the PointSet.
+ */
 void Shape::init(std::list<CordType> &newPoints)
 {
 
@@ -23,44 +46,61 @@ void Shape::init(std::list<CordType> &newPoints)
 	}
 }
 
-Shape::Shape()
-{
-
-}
-
+/**
+ * default dtor
+ */
 Shape::~Shape()
 {
 
 }
 
-bool Shape::intersect(Shape *&pShape)
+/**
+ * method to check if "this" shape intersects with "other" shape.
+ * @param pShape the "other" shape to check intersection with.
+ * @return true iff shapes intersect (or one shape is subset of other.)
+ */
+bool Shape::intersect(const Shape *pShape) const
 {
-	std::vector<Point *> pointList
+	std::vector<Point *> pntList
 			(this->points.getArray(), this->points.getArray() + this->points.size());
-	std::vector<Point *> otherPointList
+	pntList.push_back(pntList.front()); // re-add first point to close circle of edges.
+
+	std::vector<Point *> oPntList
 			(pShape->points.getArray(), pShape->points.getArray() + pShape->points.size());
+	oPntList.push_back(oPntList.front()); // re-add first point to close circle of edges.
 
-	std::vector<std::pair<Shape, Shape>> intersections;
-	if (this.area() < otherPointList.size())
+	if (this->area() < pShape->area())
 	{
-		std::swap(pointList, otherPointList);
+		std::swap(pntList, oPntList);
 	}
+	bool contained = false;
 
-	for (unsigned i = 0; i < pointList.size() - 1; i++)
+	for (unsigned i = 0; i < pntList.size() - 1; i++)
 	{
-		for (unsigned j = i; j < otherPointList.size() - 1; j++)
+		for (unsigned j = 1; j < oPntList.size() - 1; j++)
 		{
 			CordType res =
-					PointSet::ccw(*pointList.at(i), *pointList.at(i + 1), *otherPointList.at(j)) *
-					PointSet::ccw(*pointList.at(i), *pointList.at(i + 1),
-					              *otherPointList.at(j + 1));
+					PointSet::ccw(*pntList.at(i), *pntList.at(i + 1), *oPntList.at(j)) *
+					PointSet::ccw(*pntList.at(i), *pntList.at(i + 1), *oPntList.at(j + 1)
+					);
 
 			if (res < 0)
 			{
-				return true;
+				CordType res2 =
+						PointSet::ccw(*oPntList.at(j), *oPntList.at(j + 1), *pntList.at(i)) *
+						PointSet::ccw(*oPntList.at(j), *oPntList.at(j + 1), *pntList.at(i + 1)
+						);
+
+				if (res2 > 0)
+				{
+					contained = false;
+				} else
+				{
+					return true;
+				}
 			}
 
 		}
 	}
-
+	return contained;
 }

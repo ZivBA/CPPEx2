@@ -4,22 +4,49 @@
 
 #ifndef CPPEX2_TRIANGLE_H
 #define CPPEX2_TRIANGLE_H
-
-
 #include "Shape.h"
 
+/**
+ * class representing a Triangle, inherits from Shape.
+ */
 class Triangle : public Shape
 {
+
 public:
+	/**
+	 * default ctor
+	 * @return
+	 */
 	Triangle();
 
+	/**
+	 * ctor initializing pointset
+	 * @param list of CordType vars that define the shape.
+	 * @return
+	 */
 	Triangle(std::list<CordType> &list);
 
+	/**
+	 * default dtor.
+	 */
 	~Triangle();
 
-	bool validate();
+	/**
+	 * method validating that the Triangle is not degenearted
+	 * @return true iff triangle has volume.
+	 */
+	bool validate() const;
 
-	void print();
+	/**
+	 * area of triangle
+	 * @return the area of the triangle.
+	 */
+	CordType area() const;
+
+	/**
+	 * uses the printTrig method to print the triangle.
+	 */
+	void print() const;
 };
 
 

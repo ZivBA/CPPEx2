@@ -2,38 +2,69 @@
 // Created by rooty on 9/11/16.
 //
 
-#include <assert.h>
 #include "Triangle.h"
 
-Triangle::Triangle()
-{
 
-}
+/**
+ * default dtor.
+ */
 
 Triangle::~Triangle()
 {
 
 }
 
-Triangle::Triangle(std::list<CordType> &list)
+/**
+ * default ctor
+ * @return
+ */
+Triangle::Triangle() : Shape("Triangle")
+{
+}
+
+/**
+ * ctor initializing pointset
+ * @param list of CordType vars that define the shape.
+ * @return
+ */
+Triangle::Triangle(std::list<CordType> &list) : Triangle()
 {
 	init(list);
 }
 
-void Triangle::print()
+/**
+ * uses the printTrig method to print the triangle.
+ */
+void Triangle::print() const
 {
-	std::cout << "triangle" << std::endl;
+	printTrig(points.getArray()[0]->get_xCord(),
+	          points.getArray()[0]->get_yCord(),
+	          points.getArray()[1]->get_xCord(),
+	          points.getArray()[1]->get_yCord(),
+	          points.getArray()[2]->get_xCord(),
+	          points.getArray()[2]->get_yCord()
+	);
 }
 
-bool Triangle::validate()
+/**
+ * method validating that the Triangle is not degenearted
+ * @return true iff triangle has volume.
+ */
+
+bool Triangle::validate() const
 {
-	std::vector<Point *> pointList
-			(this->points.getArray(), this->points.getArray() + this->points.size());
-	assert(pointList.size() == 3);
-	return !(pointList.front()->get_xCord() == pointList.at(1)->get_xCord() &&
-	         pointList.at(1)->get_xCord() == pointList.back()->get_xCord() ||
-	         pointList.front()->get_yCord() == pointList.at(1)->get_yCord() &&
-	         pointList.at(1)->get_yCord() == pointList.back()->get_yCord());
+	return this->area() > 0.0;
+}
+
+/**
+ * area of triangle
+ * @return the area of the triangle.
+ */
+CordType Triangle::area() const
+{
+	return fabs(
+			PointSet::ccw(*points.getArray()[0], *points.getArray()[1], *points.getArray()[2]) / 2.0
+	);
 }
 
 

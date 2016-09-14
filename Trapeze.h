@@ -4,18 +4,48 @@
 
 #ifndef CPPEX2_TRAPEZE_H
 #define CPPEX2_TRAPEZE_H
-
 #include "Shape.h"
+
 
 class Trapeze : public Shape
 {
-
+private:
 public:
+	/**
+	 * default ctor
+	 * @return
+	 */
+	Trapeze();
+
+	/**
+	* ctor initializing pointset
+	* @param list of CordType vars that define the shape.
+	* @return
+	*/
 	Trapeze(std::list<CordType> &list);
 
-	void print();
+	/**
+ 	* default dtor
+ 	* @return
+ 	*/
+	~Trapeze();
 
-	bool validate();
+	/**
+	 * uses the printTrapeze method to print the triangle.
+	 */
+	void print() const;
+
+	/**
+	 * method validating that the Triangle is not degenearted
+	 * @return true iff triangle has volume.
+	 */
+	bool validate() const;
+
+	/**
+	 * area of triangle
+	 * @return the area of the triangle.
+	 */
+	CordType area() const;
 
 };
 
