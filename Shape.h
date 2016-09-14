@@ -64,20 +64,20 @@ public:
 	 *
 	 * @return true iff shape is valid according to the shape specific definition.
 	 */
-	virtual bool validate() const =0;
+	virtual bool validate() const = 0;
 
 	/**
 	 * method to return the area of a shape.
 	 * pure virutal to ensure inheriting classes implement it.
 	 * @return are of shape.
 	 */
-	virtual CordType area() const =0;
+	virtual CordType area() const = 0;
 
 	/**
 	 * method to print the shape.
 	 * pure virtual to ensure inheriting classes implement the relevant print method.
 	 */
-	virtual void print() const =0;
+	virtual void print() const = 0;
 
 protected:
 	// the backing pointset holding the points of the shape.

@@ -40,13 +40,13 @@ public:
 	 * getters for x and y coordinates.
 	 * @return
 	 */
-	CordType get_xCord() const;
+	CordType getxCord() const;
 
 	/**
 	 * getters for x and y coordinates.
 	 * @return
 	 */
-	CordType get_yCord() const;
+	CordType getyCord() const;
 
 	/**
 	 * copy ctor

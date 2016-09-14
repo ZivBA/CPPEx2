@@ -101,7 +101,7 @@ double Point::norm() const
 	 * getters for x and y coordinates.
 	 * @return
 	 */
-CordType Point::get_xCord() const
+CordType Point::getxCord() const
 {
 	return _xCord;
 }
@@ -110,7 +110,7 @@ CordType Point::get_xCord() const
 	 * getters for x and y coordinates.
 	 * @return
 	 */
-CordType Point::get_yCord() const
+CordType Point::getyCord() const
 {
 	return _yCord;
 }

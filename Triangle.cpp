@@ -37,12 +37,12 @@ Triangle::Triangle(std::list<CordType> &list) : Triangle()
  */
 void Triangle::print() const
 {
-	printTrig(points.getArray()[0]->get_xCord(),
-	          points.getArray()[0]->get_yCord(),
-	          points.getArray()[1]->get_xCord(),
-	          points.getArray()[1]->get_yCord(),
-	          points.getArray()[2]->get_xCord(),
-	          points.getArray()[2]->get_yCord()
+	printTrig(points.getArray()[0]->getxCord(),
+	          points.getArray()[0]->getyCord(),
+	          points.getArray()[1]->getxCord(),
+	          points.getArray()[1]->getyCord(),
+	          points.getArray()[2]->getxCord(),
+	          points.getArray()[2]->getyCord()
 	);
 }
 

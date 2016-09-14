@@ -24,7 +24,7 @@ PointSet::PointSet(int const size)
 {
 	_pointArray = new Point *[size];
 	_currentCapacity = size;
-	initArrayOfPnts(_pointArray, _currentCapacity);
+	_initArrayOfPnts(_pointArray, _currentCapacity);
 }
 
 /**
@@ -70,13 +70,13 @@ std::string PointSet::toString()
  */
 bool PointSet::add(Point const &pnt)
 {
-	if (contains(pnt) != notFound)
+	if (_contains(pnt) != _notFound)
 	{
 		return false;
 	}
 	if (_currentCapacity - _currentOccupancy == 1)
 	{
-		increaseCapacity();
+		_increaseCapacity();
 	}
 	_pointArray[_currentOccupancy++] = new Point(pnt);
 	return true;
@@ -91,15 +91,15 @@ bool PointSet::add(Point const &pnt)
 
 bool PointSet::remove(const Point &pnt)
 {
-	int res = contains(pnt);
-	if (res == notFound) return false;
+	int res = _contains(pnt);
+	if (res == _notFound) return false;
 	delete _pointArray[res];
 	if (res != _currentOccupancy - 1)
 	{
 		_pointArray[res] = _pointArray[_currentOccupancy - 1];
 	}
 	_currentOccupancy--;
-	if (_currentOccupancy < _currentCapacity / 2) decreaseCapacity();
+	if (_currentOccupancy < _currentCapacity / 2) _decreaseCapacity();
 	return true;
 
 
@@ -119,7 +119,7 @@ int PointSet::size() const
  * @param pPoint point to search for.
  * @return index of the point in the backing array or "notFound" flag (-1);
  */
-int PointSet::contains(const Point &pPoint) const
+int PointSet::_contains(const Point &pPoint) const
 {
 	for (int i = 0; i < _currentOccupancy; i++)
 	{
@@ -131,19 +131,19 @@ int PointSet::contains(const Point &pPoint) const
 			return i;
 		}
 	}
-	return notFound;
+	return _notFound;
 }
 
 /**
  * private method used for dynamic resizing of the backing array. doubles the capacity of the
  * set and copies the point pointers from the current array to the new one.
  */
-void PointSet::increaseCapacity()
+void PointSet::_increaseCapacity()
 {
 	_currentCapacity = _currentCapacity * 2;
 
 	Point **newArray = new Point *[_currentCapacity];
-	initArrayOfPnts(newArray, _currentCapacity);
+	_initArrayOfPnts(newArray, _currentCapacity);
 
 	std::swap_ranges(_pointArray, _pointArray + _currentOccupancy, newArray);
 
@@ -156,11 +156,11 @@ void PointSet::increaseCapacity()
  * private method used for dynamic resizing of the backing array. halves the capacity of the
  * set and copies the point pointers from the current array to the new one.
  */
-void PointSet::decreaseCapacity()
+void PointSet::_decreaseCapacity()
 {
 	_currentCapacity = _currentCapacity / 2;
 	Point **newArray = new Point *[_currentCapacity];
-	initArrayOfPnts(newArray, _currentCapacity);
+	_initArrayOfPnts(newArray, _currentCapacity);
 	std::swap_ranges(_pointArray, _pointArray + _currentOccupancy, newArray);
 
 	delete[] _pointArray;
@@ -203,7 +203,7 @@ bool PointSet::operator==(const PointSet &oPntSt) const
 	}
 	for (int i = 0; i < this->size(); i++)
 	{
-		if (_pointArray[i] != nullptr && oPntSt.contains(*_pointArray[i]) == notFound)
+		if (_pointArray[i] != nullptr && oPntSt._contains(*_pointArray[i]) == _notFound)
 		{
 			return false;
 		}
@@ -232,7 +232,7 @@ PointSet PointSet::operator-(const PointSet &oPntSt) const
 	for (int i = 0; i < _currentOccupancy; i++)
 	{
 
-		if (_pointArray[i] != nullptr && oPntSt.contains(*_pointArray[i]) == notFound)
+		if (_pointArray[i] != nullptr && oPntSt._contains(*_pointArray[i]) == _notFound)
 		{
 			newSet.add(*_pointArray[i]);
 		}
@@ -251,7 +251,7 @@ PointSet PointSet::operator&(const PointSet &oPntSt) const
 	for (int i = 0; i < _currentOccupancy; i++)
 	{
 
-		if (oPntSt.contains(*_pointArray[i]) != notFound)
+		if (oPntSt._contains(*_pointArray[i]) != _notFound)
 		{
 			newSet.add(*_pointArray[i]);
 		}
@@ -266,9 +266,9 @@ PointSet PointSet::operator&(const PointSet &oPntSt) const
  * @param b second point
  * @return an integer value of the distance between the points.
  */
-CordType PointSet::sqrDist(const Point *a, const Point *b)
+CordType PointSet::_sqrDist(const Point *a, const Point *b)
 {
-	CordType dx = a->get_xCord() - b->get_xCord(), dy = a->get_yCord() - b->get_yCord();
+	CordType dx = a->getxCord() - b->getxCord(), dy = a->getyCord() - b->getyCord();
 	return dx * dx + dy * dy;
 }
 
@@ -284,8 +284,8 @@ CordType PointSet::sqrDist(const Point *a, const Point *b)
 */
 CordType PointSet::ccw(const Point &p1, const Point &p2, const Point &p3)
 {
-	return ((p2.get_yCord() - p1.get_yCord()) * (p3.get_xCord() - p1.get_xCord()) -
-	        (p2.get_xCord() - p1.get_xCord()) * (p3.get_yCord() - p1.get_yCord()));
+	return ((p2.getyCord() - p1.getyCord()) * (p3.getxCord() - p1.getxCord()) -
+	        (p2.getxCord() - p1.getxCord()) * (p3.getyCord() - p1.getyCord()));
 
 
 }
@@ -295,7 +295,7 @@ CordType PointSet::ccw(const Point &p1, const Point &p2, const Point &p3)
  * @param pPoint the array to initialize
  * @param size the size of the array.
  */
-void PointSet::initArrayOfPnts(Point **pPoint, const int size)
+void PointSet::_initArrayOfPnts(Point **pPoint, const int size)
 {
 	for (int i = 0; i < size; i++)
 	{
@@ -303,11 +303,11 @@ void PointSet::initArrayOfPnts(Point **pPoint, const int size)
 	}
 }
 
+
 /**
- * if one wants his pointset sorted, say, for printing, then this is the way to go.
+ * returns the backing array of the pointset
+ * @return Point pointer (the array)
  */
-
-
 Point **PointSet::getArray() const
 {
 	return _pointArray;

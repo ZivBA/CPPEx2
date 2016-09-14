@@ -18,7 +18,7 @@ class PointSet
 {
 private:
 
-	const int notFound = -1;                    //not found flag for set search.
+	const int _notFound = -1;                    //not found flag for set search.
 	const int static _initialCapacity = 8;      //the initial capacity of a set
 	int _currentCapacity = 0;                   //the current *available* capacity of a set
 	int _currentOccupancy = 0;                  //the number of points currently *in* the set
@@ -29,20 +29,20 @@ private:
 	 * private method used for dynamic resizing of the backing array. doubles the capacity of the
 	 * set and copies the point pointers from the current array to the new one.
 	 */
-	void increaseCapacity();
+	void _increaseCapacity();
 
 	/**
 	 * private method used for dynamic resizing of the backing array. halves the capacity of the
 	 * set and copies the point pointers from the current array to the new one.
 	 */
-	void decreaseCapacity();
+	void _decreaseCapacity();
 
 	/**
 	 * checks if a point is currently in the set, returns it's index if found or "notFound" else.
 	 * @param pPoint point to search for.
 	 * @return index of the point in the backing array or "notFound" flag (-1);
 	 */
-	int contains(const Point &pPoint) const;
+	int _contains(const Point &pPoint) const;
 
 	/**
 	 * returns the distance between two points;
@@ -50,14 +50,14 @@ private:
 	 * @param b second point
 	 * @return an integer value of the distance between the points.
 	 */
-	static CordType sqrDist(const Point *a, const Point *b);
+	static CordType _sqrDist(const Point *a, const Point *b);
 
 	/**
 	 * simple loop to initialize an array with nullptr.
 	 * @param pPoint the array to initialize
 	 * @param size the size of the array.
 	 */
-	void initArrayOfPnts(Point **pPoint, const int size);
+	void _initArrayOfPnts(Point **pPoint, const int size);
 
 
 public:
@@ -150,6 +150,10 @@ public:
 	 */
 	PointSet operator&(const PointSet &oPntSt) const;
 
+	/**
+	 * returns the backing array of the pointset
+	 * @return Point pointer (the array)
+	 */
 	Point **getArray() const;
 
 /**

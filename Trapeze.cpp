@@ -39,14 +39,14 @@ Trapeze::Trapeze(std::list<CordType> &list) : Trapeze()
  */
 void Trapeze::print() const
 {
-	printTrapez(points.getArray()[0]->get_xCord(),
-	            points.getArray()[0]->get_yCord(),
-	            points.getArray()[1]->get_xCord(),
-	            points.getArray()[1]->get_yCord(),
-	            points.getArray()[2]->get_xCord(),
-	            points.getArray()[2]->get_yCord(),
-	            points.getArray()[3]->get_xCord(),
-	            points.getArray()[3]->get_yCord()
+	printTrapez(points.getArray()[0]->getxCord(),
+	            points.getArray()[0]->getyCord(),
+	            points.getArray()[1]->getxCord(),
+	            points.getArray()[1]->getyCord(),
+	            points.getArray()[2]->getxCord(),
+	            points.getArray()[2]->getyCord(),
+	            points.getArray()[3]->getxCord(),
+	            points.getArray()[3]->getyCord()
 	);
 
 }
@@ -60,9 +60,9 @@ bool Trapeze::validate() const
 	std::vector<Point *> pointList
 			(this->points.getArray(), this->points.getArray() + this->points.size());
 	assert(pointList.size() == 4);
-	return !((pointList.at(0)->get_yCord() != pointList.at(1)->get_yCord() ||
-	          pointList.at(2)->get_yCord() != pointList.at(3)->get_yCord()) &&
-	         pointList.at(0)->get_yCord() == pointList.at(3)->get_yCord());
+	return !((pointList.at(0)->getyCord() != pointList.at(1)->getyCord() ||
+	          pointList.at(2)->getyCord() != pointList.at(3)->getyCord()) &&
+	         pointList.at(0)->getyCord() == pointList.at(3)->getyCord());
 }
 
 /**
@@ -71,9 +71,9 @@ bool Trapeze::validate() const
  */
 CordType Trapeze::area() const
 {
-	CordType h = fabs(points.getArray()[0]->get_yCord() - points.getArray()[2]->get_yCord());
-	CordType b = fabs(points.getArray()[0]->get_xCord() - points.getArray()[1]->get_xCord());
-	CordType t = fabs(points.getArray()[2]->get_xCord() - points.getArray()[3]->get_xCord());
+	CordType h = fabs(points.getArray()[0]->getyCord() - points.getArray()[2]->getyCord());
+	CordType b = fabs(points.getArray()[0]->getxCord() - points.getArray()[1]->getxCord());
+	CordType t = fabs(points.getArray()[2]->getxCord() - points.getArray()[3]->getxCord());
 
 	return (h * ((b + t) / 2.0));
 }
